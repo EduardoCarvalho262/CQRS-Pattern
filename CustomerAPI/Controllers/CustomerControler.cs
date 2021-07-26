@@ -25,25 +25,13 @@ namespace CustomerAPI.Controllers
         [HttpGet]
         public async Task<List<Customer>> Get()
         {
-            var result = await _customerService.Obter();
-            Log.Information("Clientes Obtidos com sucesso.");
-
-            return result;
+            return await _customerService.Obter();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> Get(int id)
         {
-
             var c =   await _customerService.ObterPorId(id);
-
-            if (c == null)
-            {
-                Log.Warning("Cliente não encontrado.");
-                return NotFound();
-            }
-
-            Log.Information($"Cliente com id: {id} foi encontrando com sucesso.");
             return Ok(c);
         }
 
@@ -51,7 +39,6 @@ namespace CustomerAPI.Controllers
         public async Task<ActionResult<Customer>> Post(Customer cliente)
         {
             var result =  await _customerService.Criar(cliente);
-            Log.Information("Cliente criado com sucesso.");
             return CreatedAtAction("Get", result.Id);
         }
 
@@ -59,18 +46,8 @@ namespace CustomerAPI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Customer>> Put(int id, Customer cliente)
         {
-
-            if (id != cliente.Id)
-            {
-                Log.Warning("Não foi possível atualizar o cliente.");
-                return BadRequest();
-            }
-
             await _customerService.Atualizar(cliente);
-            Log.Information("Cliente atualizado com sucesso.");
-
             return NoContent();
-
         }
 
 
@@ -78,15 +55,6 @@ namespace CustomerAPI.Controllers
         public async Task<ActionResult<Customer>> Delete(int id)
         {
             var cliente = await _customerService.Deletar(id);
-
-
-            if (cliente == null)
-            {
-                Log.Warning("Cliente inexistente, impossível deletar.");
-                return NotFound();
-            }
-
-            Log.Information("Cliente deletado com sucesso.");
             return NoContent();
         }
 
