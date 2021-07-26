@@ -39,7 +39,7 @@ namespace CustomerAPI.Controllers
         public async Task<ActionResult<Customer>> Post(Customer cliente)
         {
             var result =  await _customerService.Criar(cliente);
-            return CreatedAtAction("Get", result.Id);
+            return CreatedAtAction("Get", result);
         }
 
 
