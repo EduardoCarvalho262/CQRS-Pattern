@@ -1,5 +1,6 @@
 ﻿using System;
 using CustomerDomain.Domain;
+using CustomerDomain.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -19,6 +20,7 @@ namespace CustomerInfra.Data
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
