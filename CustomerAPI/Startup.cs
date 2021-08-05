@@ -1,4 +1,5 @@
 
+using CustomerAPI.Helpers;
 using CustomerApplication.Handlers.CustomerHandlers;
 using CustomerInfra.Data;
 using CustomerInfra.Repositories;
@@ -35,7 +36,9 @@ namespace CustomerAPI
 
             services.AddControllers();
             services.AddDbContext<CrudProjeto_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped(typeof(ICustomerService), typeof(CustomerServiceC));
+            services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddMediatR(typeof(GetAllCustomersHandlers).GetTypeInfo().Assembly);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddSwaggerGen(c =>
@@ -55,6 +58,13 @@ namespace CustomerAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(x => x
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseRouting();
 

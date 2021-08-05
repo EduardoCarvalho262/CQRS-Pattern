@@ -1,4 +1,4 @@
-namespace CustomerDomain.Helpers
+namespace CustomerAPI.Helpers
 {
     public class AppSettings
     {
