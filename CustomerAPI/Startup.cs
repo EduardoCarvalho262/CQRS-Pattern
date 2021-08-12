@@ -34,6 +34,7 @@ namespace CustomerAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors();
             services.AddControllers();
             services.AddDbContext<CrudProjeto_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));

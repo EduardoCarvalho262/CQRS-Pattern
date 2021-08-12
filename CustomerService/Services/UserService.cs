@@ -10,6 +10,8 @@ namespace CustomerService.Services
 {
     public class UserService : IUserService
     {
+
+        //TODO implementar classe serviço usuario
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
             throw new NotImplementedException();
