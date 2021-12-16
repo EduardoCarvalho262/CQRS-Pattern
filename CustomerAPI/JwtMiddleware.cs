@@ -7,8 +7,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CustomerAPI.Helpers;
 
-namespace CustomerAPI.Helpers
+namespace CustomerApplication.Helpers
 {
     public class JwtMiddleware
     {
@@ -43,20 +44,18 @@ namespace CustomerAPI.Helpers
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-
-                // attach user to context on successful jwt validation
+                
+                // Pegue o usuario do contexto com a validação que deu certo 
                 context.Items["User"] = userService.GetById(userId);
             }
-            catch
+            catch(Exception ex)
             {
-                // do nothing if jwt validation fails
-                // user is not attached to context so request won't have access to secure routes
+                Log.Error("Error: ", ex.Message);
             }
         }
 
