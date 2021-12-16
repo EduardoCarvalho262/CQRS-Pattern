@@ -8,8 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CustomerAPI.Helpers;
+using Serilog;
 
-namespace CustomerApplication.Helpers
+namespace CustomerAPI.Helpers
 {
     public class JwtMiddleware
     {

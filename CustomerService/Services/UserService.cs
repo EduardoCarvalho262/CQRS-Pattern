@@ -2,19 +2,26 @@
 using CustomerDomain.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using CustomerApplication.Commands.UserCommands;
+using MediatR;
 
 namespace CustomerService.Services
 {
     public class UserService : IUserService
     {
 
-        //TODO implementar classe serviço usuario
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        private readonly IMediator _mediator;
+        public UserService(IMediator mediator)
         {
-            throw new NotImplementedException();
+            _mediator = mediator;
+        }
+        
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+        {
+            var command = new CreateUserCommand(model.Username, model.Password);
+            var response =  await _mediator.Send(command);
+            return response;
         }
 
         public IEnumerable<User> GetAll()

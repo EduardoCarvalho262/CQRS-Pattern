@@ -10,7 +10,7 @@ namespace CustomerService.Services
 {
     public interface IUserService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
         IEnumerable<User> GetAll();
         User GetById(int id);
     }

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerInfra", "CustomerInfra\CustomerInfra.csproj", "{42DA5906-0BEC-4916-AA89-FEBED5B33313}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerInfra", "CustomerInfra\CustomerInfra.csproj", "{42DA5906-0BEC-4916-AA89-FEBED5B33313}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerDomain", "CustomerDomain\CustomerDomain.csproj", "{74B3E7A4-2B0B-4F8D-850E-63820B6D1BFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerDomain", "CustomerDomain\CustomerDomain.csproj", "{74B3E7A4-2B0B-4F8D-850E-63820B6D1BFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerService", "CustomerService\CustomerService.csproj", "{0862E2F1-51F4-47D6-9B5D-B99B97556A3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerService", "CustomerService\CustomerService.csproj", "{0862E2F1-51F4-47D6-9B5D-B99B97556A3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerAPI", "CustomerAPI\CustomerAPI.csproj", "{A85B9EC8-A587-4082-B869-D63ACC7FF388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerAPI", "CustomerAPI\CustomerAPI.csproj", "{A85B9EC8-A587-4082-B869-D63ACC7FF388}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerApplication", "CustomerApplication\CustomerApplication.csproj", "{5F709BE8-AD16-4820-A225-224CDE838CE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerApplication", "CustomerApplication\CustomerApplication.csproj", "{5F709BE8-AD16-4820-A225-224CDE838CE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

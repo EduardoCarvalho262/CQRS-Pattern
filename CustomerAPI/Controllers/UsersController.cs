@@ -1,12 +1,7 @@
 ﻿using CustomerAPI.Helpers;
 using CustomerDomain.Domain;
 using CustomerService.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CustomerAPI.Controllers
 {
@@ -14,7 +9,7 @@ namespace CustomerAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
 
         public UsersController(IUserService userService)
         {
