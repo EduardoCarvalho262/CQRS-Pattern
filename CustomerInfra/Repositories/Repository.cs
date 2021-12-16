@@ -11,19 +11,19 @@ namespace CustomerInfra.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
 
-        private readonly CrudProjeto_dbContext context;
+        private readonly CrudProjeto_dbContext _context;
         private DbSet<T> table = null;
 
         public Repository(CrudProjeto_dbContext context)
         {
-            this.context = context;
+            this._context = context;
             table = context.Set<T>();
         }
 
         public async Task<T> Add(T entity)
         {
             table.Add(entity);
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return entity;
         }
 
@@ -36,7 +36,7 @@ namespace CustomerInfra.Repositories
             }
 
             table.Remove(entity);
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return entity;
         }
 
@@ -52,8 +52,8 @@ namespace CustomerInfra.Repositories
 
         public async Task<T> Update(T entity)
         {
-            context.Entry(entity).State = EntityState.Modified;
-            await context.SaveChangesAsync();
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return entity;
         }
     }

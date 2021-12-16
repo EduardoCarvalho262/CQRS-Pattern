@@ -28,15 +28,14 @@ namespace CustomerAPI
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        private IConfiguration Configuration { get; }
+        
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddCors();
             services.AddControllers();
-            services.AddDbContext<CrudProjeto_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<CrudProjeto_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped(typeof(ICustomerService), typeof(CustomerServiceC));
             services.AddScoped(typeof(IUserService), typeof(UserService));
@@ -45,6 +44,28 @@ namespace CustomerAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerAPI", Version = "v1" });
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+                
+                c.AddSecurityDefinition("Bearer", securitySchema);
+                
+                var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    { securitySchema, new[] { "Bearer" } }
+                };
+                
+                c.AddSecurityRequirement(securityRequirement);
             });
         }
 

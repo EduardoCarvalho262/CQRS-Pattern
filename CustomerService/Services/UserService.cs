@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CustomerApplication.Commands.UserCommands;
+using CustomerApplication.Queries.UserQueries;
 using MediatR;
 
 namespace CustomerService.Services
@@ -12,6 +13,7 @@ namespace CustomerService.Services
     {
 
         private readonly IMediator _mediator;
+        //TODO implementar logs em toda api
         public UserService(IMediator mediator)
         {
             _mediator = mediator;
@@ -24,14 +26,20 @@ namespace CustomerService.Services
             return response;
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            throw new NotImplementedException();
+            var query = new GetAllUsersQuery();
+            var result = await _mediator.Send(query);
+
+            return result;
         }
 
-        public User GetById(int id)
+        public async Task<User> GetById(int id)
         {
-            throw new NotImplementedException();
+            var query = new GetUserByIdQuery(id);
+            var result = await _mediator.Send(query);
+
+            return result;
         }
     }
 }

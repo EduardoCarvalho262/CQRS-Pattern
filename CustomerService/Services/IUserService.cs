@@ -11,7 +11,7 @@ namespace CustomerService.Services
     public interface IUserService
     {
         Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
+        Task<IEnumerable<User>> GetAll();
+        Task<User> GetById(int id);
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CustomerAPI.Helpers;
+using CustomerDomain.Entity;
 using Serilog;
 
 namespace CustomerAPI.Helpers
@@ -28,12 +29,16 @@ namespace CustomerAPI.Helpers
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
             if (token != null)
-                attachUserToContext(context, userService, token);
+            {
+                var result = attachUserToContext(context, userService, token);
+                Log.Information("Result is: ", result);
+            }
+
 
             await _next(context);
         }
 
-        private void attachUserToContext(HttpContext context, IUserService userService, string token)
+        private async Task<User> attachUserToContext(HttpContext context, IUserService userService, string token)
         {
             try
             {
@@ -50,13 +55,14 @@ namespace CustomerAPI.Helpers
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-                
-                // Pegue o usuario do contexto com a validação que deu certo 
-                context.Items["User"] = userService.GetById(userId);
+                var user = await userService.GetById(userId);
+                context.Items["User"] = user;
+                return user;
             }
             catch(Exception ex)
             {
                 Log.Error("Error: ", ex.Message);
+                return null; //TODO tirar isso
             }
         }
 

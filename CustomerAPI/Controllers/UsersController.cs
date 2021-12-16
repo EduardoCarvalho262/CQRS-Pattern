@@ -1,4 +1,5 @@
-﻿using CustomerAPI.Helpers;
+﻿using System.Threading.Tasks;
+using CustomerAPI.Helpers;
 using CustomerDomain.Domain;
 using CustomerService.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +18,9 @@ namespace CustomerAPI.Controllers
         }
 
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
-            var response = _userService.Authenticate(model);
+            var response = await _userService.Authenticate(model);
 
             if (response == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -29,9 +30,9 @@ namespace CustomerAPI.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userService.GetAll();
+            var users = await _userService.GetAll();
             return Ok(users);
         }
     }
