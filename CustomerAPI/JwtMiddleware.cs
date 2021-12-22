@@ -7,7 +7,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CustomerAPI.Helpers;
 using CustomerDomain.Entity;
 using Serilog;
 
@@ -62,7 +61,7 @@ namespace CustomerAPI.Helpers
             catch(Exception ex)
             {
                 Log.Error("Error: ", ex.Message);
-                return null; //TODO tirar isso
+                return new User(); 
             }
         }
 

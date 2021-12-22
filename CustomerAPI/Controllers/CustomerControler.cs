@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+ using CustomerAPI.Helpers;
 
-namespace CustomerAPI.Controllers
+ namespace CustomerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,20 +22,23 @@ namespace CustomerAPI.Controllers
         {
             _customerService = customerService;
         }
-
+        
+        [Authorize]
         [HttpGet]
         public async Task<List<Customer>> Get()
         {
             return await _customerService.Obter();
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> Get(int id)
         {
             var c =   await _customerService.ObterPorId(id);
             return Ok(c);
         }
-
+        
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Customer>> Post(Customer cliente)
         {
@@ -42,7 +46,7 @@ namespace CustomerAPI.Controllers
             return CreatedAtAction("Get", result);
         }
 
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<Customer>> Put(int id, Customer cliente)
         {
@@ -50,7 +54,7 @@ namespace CustomerAPI.Controllers
             return NoContent();
         }
 
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Customer>> Delete(int id)
         {
