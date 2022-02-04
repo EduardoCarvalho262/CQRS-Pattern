@@ -14,20 +14,20 @@ namespace CustomerApplication.Handlers.CustomersHandlersCommands
     public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand, Customer>
     {
 
-        private readonly IRepository<Customer> _repo;
+        private readonly IRepository<Customer> _repository;
 
-        public CreateCustomerHandler(IRepository<Customer> repo)
+        public CreateCustomerHandler(IRepository<Customer> repository)
         {
-            _repo = repo;
+            _repository = repository;
         }
 
         public async Task<Customer> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var cliente = new Customer(request.Name, request.Phone);
+            var customer = new Customer(request.Name, request.Phone);
 
-            await _repo.Add(cliente);
+            await _repository.Add(customer);
 
-            return cliente;
+            return customer;
         }
     }
 }

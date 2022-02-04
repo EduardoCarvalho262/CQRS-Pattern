@@ -9,10 +9,10 @@ namespace CustomerService.Services
 {
     public interface ICustomerService
     {
-        Task<List<Customer>> Obter();
+        Task<List<Customer>> ObterTodos();
         Task<Customer> ObterPorId(int id);
-        Task<Customer> Atualizar(Customer cliente);
-        Task<Customer> Criar(Customer cliente);
+        Task<Customer> Atualizar(Customer customer);
+        Task<Customer> Criar(Customer customer);
         Task<Customer> Deletar(int id);
     }
 }

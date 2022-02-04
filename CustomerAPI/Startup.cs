@@ -39,7 +39,7 @@ namespace CustomerAPI
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped(typeof(ICustomerService), typeof(CustomerServiceC));
             services.AddScoped(typeof(IUserService), typeof(UserService));
-            services.AddMediatR(typeof(GetAllCustomersHandlers).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(GetAllCustomersHandler).GetTypeInfo().Assembly);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddSwaggerGen(c =>
             {

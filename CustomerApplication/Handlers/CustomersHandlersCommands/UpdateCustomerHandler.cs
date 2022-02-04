@@ -13,22 +13,22 @@ namespace CustomerApplication.Handlers.CustomersHandlersCommands
 {
     public class UpdateCustomerHandler : IRequestHandler<UpdateCustomerCommand, Customer>
     {
-        private readonly IRepository<Customer> _repo;
+        private readonly IRepository<Customer> _repository;
 
-        public UpdateCustomerHandler(IRepository<Customer> repo)
+        public UpdateCustomerHandler(IRepository<Customer> repository)
         {
-            _repo = repo;
+            _repository = repository;
         }
 
         public async Task<Customer> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var cliente = await _repo.Get(request.Id);
-            cliente.Name = request.Name;
-            cliente.Phone = request.Phone;
+            var customer = await _repository.Get(request.Id);
+            customer.Name = request.Name;
+            customer.Phone = request.Phone;
 
-            await _repo.Update(cliente);
+            await _repository.Update(customer);
 
-            return cliente;
+            return customer;
         }
     }
 }

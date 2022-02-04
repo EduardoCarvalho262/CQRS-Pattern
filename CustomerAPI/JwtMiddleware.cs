@@ -53,8 +53,8 @@ namespace CustomerAPI.Helpers
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-                var user = await userService.GetById(userId);
+                var id = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var user = await userService.GetById(id);
                 context.Items["User"] = user;
                 return user;
             }

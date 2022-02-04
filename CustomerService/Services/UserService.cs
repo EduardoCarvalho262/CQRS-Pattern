@@ -13,7 +13,6 @@ namespace CustomerService.Services
     {
 
         private readonly IMediator _mediator;
-        //TODO implementar logs em toda api
         public UserService(IMediator mediator)
         {
             _mediator = mediator;
@@ -22,24 +21,24 @@ namespace CustomerService.Services
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
             var command = new CreateUserCommand(model.Username, model.Password);
-            var response =  await _mediator.Send(command);
-            return response;
+            var autheticateResponse =  await _mediator.Send(command);
+            return autheticateResponse;
         }
 
         public async Task<IEnumerable<User>> GetAll()
         {
             var query = new GetAllUsersQuery();
-            var result = await _mediator.Send(query);
+            var users = await _mediator.Send(query);
 
-            return result;
+            return users;
         }
 
         public async Task<User> GetById(int id)
         {
             var query = new GetUserByIdQuery(id);
-            var result = await _mediator.Send(query);
+            var user = await _mediator.Send(query);
 
-            return result;
+            return user;
         }
     }
 }

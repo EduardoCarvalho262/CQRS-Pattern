@@ -10,17 +10,17 @@ namespace CustomerApplication.Handlers.UsersHandlersQueries
 {
     public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<User>>
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IRepository<User> _repository;
 
-        public GetAllUsersHandler(IRepository<User> userRepository)
+        public GetAllUsersHandler(IRepository<User> repository)
         {
-            _userRepository = userRepository;
+            _repository = repository;
         }
 
         public async Task<List<User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var result = await _userRepository.GetAll();
-            return result;
+            var users = await _repository.GetAll();
+            return users;
         }
     }
 }

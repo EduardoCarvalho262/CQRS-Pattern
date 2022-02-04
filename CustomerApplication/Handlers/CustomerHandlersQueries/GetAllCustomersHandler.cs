@@ -9,22 +9,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CustomerApplication.Handlers.CustomerHandlers
+namespace CustomerApplication.Handlers.CustomerHandler
 {
-    public class GetAllCustomersHandlers : IRequestHandler<GetAllCustomersQuery, List<Customer>>
+    public class GetAllCustomersHandler : IRequestHandler<GetAllCustomersQuery, List<Customer>>
     {
 
-        private readonly IRepository<Customer> _repo;
+        private readonly IRepository<Customer> _repository;
 
-        public GetAllCustomersHandlers(IRepository<Customer> repo)
+        public GetAllCustomersHandler(IRepository<Customer> repository)
         {
-            _repo = repo;
+            _repository = repository;
         }
 
         public async Task<List<Customer>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            var result = await _repo.GetAll();
-            return result;
+            var customers = await _repository.GetAll();
+            return customers;
         }
     }
 }

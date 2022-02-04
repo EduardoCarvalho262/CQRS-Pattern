@@ -14,17 +14,17 @@ namespace CustomerApplication.Handlers.CustomerHandlers
     public class GetCustomerByIdHandler : IRequestHandler<GetCustomerByIdQuery, Customer>
     {
 
-        private readonly IRepository<Customer> _repo;
+        private readonly IRepository<Customer> _repository;
 
-        public GetCustomerByIdHandler(IRepository<Customer> repo)
+        public GetCustomerByIdHandler(IRepository<Customer> repository)
         {
-            _repo = repo;
+            _repository = repository;
         }
 
         public async Task<Customer> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
-            var result =  await _repo.Get(request.Id);
-            return result;
+            var customer =  await _repository.Get(request.Id);
+            return customer;
         }
     }
 }

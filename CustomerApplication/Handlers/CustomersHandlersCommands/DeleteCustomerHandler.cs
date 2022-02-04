@@ -14,18 +14,18 @@ namespace CustomerApplication.Handlers.CustomersHandlersCommands
     public class DeleteCustomerHandler : IRequestHandler<DeleteCustomerCommand, Customer>
     {
 
-        private readonly IRepository<Customer> _repo;
+        private readonly IRepository<Customer> _repository;
 
-        public DeleteCustomerHandler(IRepository<Customer> repo)
+        public DeleteCustomerHandler(IRepository<Customer> repository)
         {
-            _repo = repo;
+            _repository = repository;
         }
 
 
         public async Task<Customer> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var result = await _repo.Delete(request.Id);
-            return result;
+            var customer = await _repository.Delete(request.Id);
+            return customer;
         }
     }
 }

@@ -15,7 +15,6 @@ using System.Threading.Tasks;
     [ApiController]
     public class CustomerControler : ControllerBase
     {
-        //Injeção de dependência
         private readonly ICustomerService _customerService;
 
         public CustomerControler(ICustomerService customerService)
@@ -25,9 +24,9 @@ using System.Threading.Tasks;
         
         [Authorize]
         [HttpGet]
-        public async Task<List<Customer>> Get()
+        public async Task<List<Customer>> GetAll()
         {
-            return await _customerService.Obter();
+            return await _customerService.ObterTodos();
         }
 
         [Authorize]

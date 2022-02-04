@@ -5,6 +5,7 @@ using MediatR;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomerService.Services
@@ -25,9 +26,9 @@ namespace CustomerService.Services
             {
                 var command = new UpdateCustomerCommand(cliente.Id, cliente.Name, cliente.Phone);
                 Log.Information("Atualizando Cliente...");
-                var result =  await _mediatR.Send(command);
+                var customer =  await _mediatR.Send(command);
                 Log.Information("Cliente atualizado com sucesso.");
-                return result;
+                return customer;
             }
             catch (Exception ex)
             {
@@ -43,9 +44,9 @@ namespace CustomerService.Services
             {
                 var command = new CreateCustomerCommand(cliente.Id, cliente.Name, cliente.Phone);
                 Log.Information("Criando Cliente...");
-                var result =  await _mediatR.Send(command);
+                var customer =  await _mediatR.Send(command);
                 Log.Information("Cliente criado com sucesso.");
-                return result;
+                return customer;
             }
             catch (Exception ex)
             {
@@ -61,9 +62,9 @@ namespace CustomerService.Services
             {
                 var command = new DeleteCustomerCommand(id);
                 Log.Information("Deletando Cliente...");
-                var result = await _mediatR.Send(command);
+                var customer = await _mediatR.Send(command);
                 Log.Information("Cliente deletado com sucesso.");
-                return result;
+                return customer;
             }
             catch (Exception ex)
             {
@@ -73,15 +74,15 @@ namespace CustomerService.Services
           
         }
 
-        public async Task<List<Customer>> Obter()
+        public async Task<List<Customer>> ObterTodos()
         {
             try
             {
                 var query = new GetAllCustomersQuery();
                 Log.Information("Obtendo todos os clientes...");
-                var result =  await _mediatR.Send(query);
+                var customer =  await _mediatR.Send(query);
                 Log.Information("Clientes Obtidos com sucesso.");
-                return result;
+                return customer;
             }
             catch (Exception ex)
             {
@@ -98,9 +99,9 @@ namespace CustomerService.Services
             {
                 var query = new GetCustomerByIdQuery { Id = id };
                 Log.Information($"Buscando cliente com id: {id}");
-                var result =  await _mediatR.Send(query);
+                var customer =  await _mediatR.Send(query);
                 Log.Information($"Cliente com id: {id} foi encontrando com sucesso.");
-                return result;
+                return customer;
             }
             catch (Exception ex)
             {

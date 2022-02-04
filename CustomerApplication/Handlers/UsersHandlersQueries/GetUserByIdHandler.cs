@@ -9,17 +9,17 @@ namespace CustomerApplication.Handlers.UsersHandlersQueries
 {
     public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, User>
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IRepository<User> _repository;
 
-        public GetUserByIdHandler(IRepository<User> userRepository)
+        public GetUserByIdHandler(IRepository<User> repository)
         {
-            _userRepository = userRepository;
+            _repository = repository;
         }
 
         public async Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _userRepository.Get(request.Id);
-            return result;
+            var user = await _repository.Get(request.Id);
+            return user;
         }
     }
 }
