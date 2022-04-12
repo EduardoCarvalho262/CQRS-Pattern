@@ -22,14 +22,12 @@ using System.Threading.Tasks;
             _customerService = customerService;
         }
         
-        [Authorize]
         [HttpGet]
         public async Task<List<Customer>> GetAll()
         {
             return await _customerService.ObterTodos();
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> Get(int id)
         {
@@ -37,7 +35,6 @@ using System.Threading.Tasks;
             return Ok(c);
         }
         
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Customer>> Post(Customer cliente)
         {
@@ -45,7 +42,6 @@ using System.Threading.Tasks;
             return CreatedAtAction("Get", result);
         }
 
-        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<Customer>> Put(int id, Customer cliente)
         {
@@ -53,7 +49,6 @@ using System.Threading.Tasks;
             return NoContent();
         }
 
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Customer>> Delete(int id)
         {

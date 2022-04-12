@@ -1,5 +1,6 @@
 
 using CustomerAPI.Helpers;
+using CustomerApplication.Handlers.CustomerHandler;
 using CustomerInfra.Data;
 using CustomerInfra.Repositories;
 using CustomerService.Services;

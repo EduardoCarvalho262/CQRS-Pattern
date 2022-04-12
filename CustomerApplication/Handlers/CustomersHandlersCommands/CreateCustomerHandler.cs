@@ -25,9 +25,9 @@ namespace CustomerApplication.Handlers.CustomersHandlersCommands
         {
             var customer = new Customer(request.Name, request.Phone);
 
-            await _repository.Add(customer);
+            var response = await _repository.Add(customer); //TODO Adicionar um Try-Catch para tratamento de erros.
 
-            return customer;
+            return response;
         }
     }
 }

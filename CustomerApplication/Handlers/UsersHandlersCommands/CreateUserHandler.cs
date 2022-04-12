@@ -35,7 +35,6 @@ namespace CustomerApplication.Handlers.UsersCommands
             if (user == null) return null;
 
             var token = generateJwtToken(user);
-            
             var authenticateResponse = new AuthenticateResponse(user, token);
 
             return Task.FromResult(authenticateResponse);
@@ -44,6 +43,7 @@ namespace CustomerApplication.Handlers.UsersCommands
         private string generateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -52,6 +52,7 @@ namespace CustomerApplication.Handlers.UsersCommands
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
+
             return tokenHandler.WriteToken(token);
         }
     }
