@@ -5,7 +5,7 @@ using CustomerInfra.Repositories;
 using Moq;
 using NUnit.Framework;
 
-namespace CustomerUnitTests;
+namespace CustomerUnitTests.Manipuladores.Commands.Customers;
 
 public class CreateCustomerTest
 {
@@ -19,7 +19,7 @@ public class CreateCustomerTest
     }
 
     [Test]
-    public void Adiciona_Objeto_Customer_Retorna_ObjetoCriado()
+    public void Adiciona_ObjetoCustomer_RetornaObjetoCriado()
     {
         //Arrange
         var manipulador = new CreateCustomerHandler(_mockRepository.Object);
