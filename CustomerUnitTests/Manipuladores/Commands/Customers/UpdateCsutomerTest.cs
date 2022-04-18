@@ -32,7 +32,7 @@ namespace CustomerUnitTests.Manipuladores.Commands.Customers
 
             //Assert
             Assert.NotNull(response);
-            Assert.AreEqual(1, response.Id);
+            Assert.AreEqual(comando.Id, response.Id);
             Assert.AreEqual(comando.Name, response.Result.Name);
             Assert.AreEqual(comando.Phone, response.Result.Phone);
         }
