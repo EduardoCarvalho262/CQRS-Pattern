@@ -1,15 +1,10 @@
-﻿ using CustomerDomain.Domain;
+﻿using CustomerDomain.Domain;
 using CustomerService.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
- using CustomerAPI.Helpers;
 
- namespace CustomerAPI.Controllers
+namespace CustomerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,38 +18,77 @@ using System.Threading.Tasks;
         }
         
         [HttpGet]
-        public async Task<List<Customer>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await _customerService.ObterTodos();
+            try
+            {
+                var listaCustomers = await _customerService.ObterTodos();
+                return Ok(listaCustomers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var c =   await _customerService.ObterPorId(id);
-            return Ok(c);
+            try
+            {
+                var customer = await _customerService.ObterPorId(id);
+                return Ok(customer);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+
         }
         
         [HttpPost]
-        public async Task<ActionResult<Customer>> Post(Customer cliente)
+        public async Task<IActionResult> Post(Customer cliente)
         {
-            var result =  await _customerService.Criar(cliente);
-            return CreatedAtAction("Get", result);
+            try
+            {
+                var response = await _customerService.Criar(cliente);
+                return CreatedAtAction("Get", response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Customer>> Put(int id, Customer cliente)
+        public async Task<IActionResult> Put(Customer cliente)
         {
-            await _customerService.Atualizar(cliente);
-            return NoContent();
+            try
+            {
+                var response = await _customerService.Atualizar(cliente);
+                return Ok(response.Id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Customer>> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var cliente = await _customerService.Deletar(id);
-            return NoContent();
+            try
+            {
+                
+            var customer = await _customerService.Deletar(id);
+            return Ok(customer.Id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
     }
 }

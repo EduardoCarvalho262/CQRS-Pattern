@@ -4,8 +4,6 @@ using CustomerInfra.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,8 +21,15 @@ namespace CustomerApplication.Handlers.CustomerHandler
 
         public async Task<List<Customer>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            var customers = await _repository.GetAll();
-            return customers;
+            try
+            {
+               var customers = await _repository.GetAll();
+               return customers;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro: " + ex.Message);
+            }
         }
     }
 }

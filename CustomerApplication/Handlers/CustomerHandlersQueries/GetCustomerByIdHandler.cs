@@ -3,9 +3,6 @@ using CustomerDomain.Domain;
 using CustomerInfra.Repositories;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,8 +20,15 @@ namespace CustomerApplication.Handlers.CustomerHandlers
 
         public async Task<Customer> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
-            var customer =  await _repository.Get(request.Id);
-            return customer;
+            try
+            {
+                var customer = await _repository.Get(request.Id);
+                return customer;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
+            }
         }
     }
 }

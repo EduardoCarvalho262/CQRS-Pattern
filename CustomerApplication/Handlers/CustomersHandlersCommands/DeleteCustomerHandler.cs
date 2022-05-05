@@ -3,9 +3,6 @@ using CustomerDomain.Domain;
 using CustomerInfra.Repositories;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,8 +21,15 @@ namespace CustomerApplication.Handlers.CustomersHandlersCommands
 
         public async Task<Customer> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _repository.Delete(request.Id);
-            return customer;
+            try
+            {
+                var customer = await _repository.Delete(request.Id);
+                return customer; //Adicionar o objeto de resposta
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
+            }
         }
     }
 }

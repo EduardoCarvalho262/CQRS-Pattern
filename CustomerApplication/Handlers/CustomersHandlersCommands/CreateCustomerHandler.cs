@@ -3,9 +3,6 @@ using CustomerDomain.Domain;
 using CustomerInfra.Repositories;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,11 +20,18 @@ namespace CustomerApplication.Handlers.CustomersHandlersCommands
 
         public async Task<Customer> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = new Customer(request.Name, request.Phone);
+            try
+            {
+                var customer = new Customer(request.Name, request.Phone);
 
-            var response = await _repository.Add(customer); //TODO Adicionar um Try-Catch para tratamento de erros.
+                var response = await _repository.Add(customer);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
+            }
         }
     }
 }
