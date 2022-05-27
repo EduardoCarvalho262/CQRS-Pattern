@@ -23,7 +23,7 @@ public class CreateCustomerTest
     {
         //Arrange
         var manipulador = new CreateCustomerHandler(_mockRepository.Object);
-        var objeto = new CreateCustomerCommand(1, "Eduardo", "11985092041");
+        var objeto = new CreateCustomerCommand("Eduardo", "11985092041");
 
         //Act
         var response = manipulador.Handle(objeto, new System.Threading.CancellationToken());
@@ -31,7 +31,6 @@ public class CreateCustomerTest
 
         //Assert
         Assert.IsNotNull(response);
-        Assert.AreEqual(objeto.Id, response.Result.Id);
         Assert.AreEqual(objeto.Name, response.Result.Name);
         Assert.AreEqual(objeto.Phone, response.Result.Phone);
     }

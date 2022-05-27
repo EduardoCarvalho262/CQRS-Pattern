@@ -32,7 +32,7 @@ namespace CustomerAPI
             services.AddControllers();
             services.AddDbContext<CrudProjeto_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddScoped(typeof(ICustomerService), typeof(CustomerServiceC));
+            services.AddScoped(typeof(ICustomerServices), typeof(CustomerServices));
             services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddMediatR(typeof(GetAllCustomersHandler).GetTypeInfo().Assembly);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

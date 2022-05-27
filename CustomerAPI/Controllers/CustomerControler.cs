@@ -1,7 +1,10 @@
-﻿using CustomerDomain.Domain;
+﻿using CustomerApplication.Commands.CustomerCommands;
+using CustomerDomain.Domain;
 using CustomerService.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace CustomerAPI.Controllers
@@ -10,9 +13,9 @@ namespace CustomerAPI.Controllers
     [ApiController]
     public class CustomerControler : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        private readonly ICustomerServices _customerService;
 
-        public CustomerControler(ICustomerService customerService)
+        public CustomerControler(ICustomerServices customerService)
         {
             _customerService = customerService;
         }
@@ -20,75 +23,56 @@ namespace CustomerAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                var listaCustomers = await _customerService.ObterTodos();
-                return Ok(listaCustomers);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var listaCustomers = await _customerService.ObterTodos();
+
+            if (listaCustomers.Status != HttpStatusCode.OK.ToString())
+                return NotFound(listaCustomers);
+
+            return Ok(listaCustomers);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            try
-            {
-                var customer = await _customerService.ObterPorId(id);
-                return Ok(customer);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var customer = await _customerService.ObterPorId(id);
 
+            if(customer.Status != HttpStatusCode.OK.ToString())
+                return NotFound(customer);
+
+            return Ok(customer.Customers.FirstOrDefault());
         }
         
         [HttpPost]
-        public async Task<IActionResult> Post(Customer cliente)
+        public async Task<IActionResult> Post(CreateCustomerCommand cliente)
         {
-            try
-            {
-                var response = await _customerService.Criar(cliente);
-                return CreatedAtAction("Get", response);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var response = await _customerService.Criar(cliente);
 
+            if(response.Status != HttpStatusCode.NoContent.ToString())
+                return BadRequest(response);
+
+            return CreatedAtAction(nameof(Post), response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Customer cliente)
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateCustomerCommand cliente)
         {
-            try
-            {
-                var response = await _customerService.Atualizar(cliente);
-                return Ok(response.Id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var response = await _customerService.Atualizar(cliente);
 
+            if(response.Status != HttpStatusCode.NoContent.ToString())
+                return BadRequest(response);
+
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                
             var customer = await _customerService.Deletar(id);
-            return Ok(customer.Id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            if (customer.Status != HttpStatusCode.NoContent.ToString())
+                return BadRequest(customer);
+
+            return Ok(customer);
         }
     }
 }
