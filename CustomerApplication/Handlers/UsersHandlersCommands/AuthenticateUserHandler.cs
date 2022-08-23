@@ -16,19 +16,19 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CustomerApplication.Handlers.UsersCommands
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserCommand, AuthenticateResponse>
+    public class AuthenticateUserHandler : IRequestHandler<AutheticateUserCommand, AuthenticateResponse>
     {
         private readonly IRepository<User> _repository;
         private readonly AppSettings _appSettings;
         
-        public CreateUserHandler(IRepository<User> repository, IOptions<AppSettings> appSettings)
+        public AuthenticateUserHandler(IRepository<User> repository, IOptions<AppSettings> appSettings)
         {
             _repository = repository;
             _appSettings = appSettings.Value;
         }
         
         
-        public Task<AuthenticateResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public Task<AuthenticateResponse> Handle(AutheticateUserCommand request, CancellationToken cancellationToken)
         {
             var user = _repository.GetAll().Result.FirstOrDefault(x => x.Username == request.Username && x.Password == request.Password);
 

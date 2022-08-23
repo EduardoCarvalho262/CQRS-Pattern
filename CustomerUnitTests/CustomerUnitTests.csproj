@@ -30,4 +30,16 @@
       <Folder Include="Manipuladores\Queries\Users\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Middleware\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Middleware\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Middleware\**" />
+    </ItemGroup>
+
 </Project>

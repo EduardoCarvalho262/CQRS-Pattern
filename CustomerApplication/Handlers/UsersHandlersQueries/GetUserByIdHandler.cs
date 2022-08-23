@@ -1,9 +1,10 @@
-using System.Threading;
-using System.Threading.Tasks;
-using CustomerApplication.Queries.UserQueries;
+﻿using CustomerApplication.Queries.UserQueries;
 using CustomerDomain.Entity;
 using CustomerInfra.Repositories;
 using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CustomerApplication.Handlers.UsersHandlersQueries
 {
@@ -15,10 +16,11 @@ namespace CustomerApplication.Handlers.UsersHandlersQueries
         {
             _repository = repository;
         }
-
-        public async Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        
+        public Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _repository.Get(request.Id);
+            var user = _repository.Get(request.Id);
+
             return user;
         }
     }

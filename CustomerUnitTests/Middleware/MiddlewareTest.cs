@@ -17,6 +17,7 @@ public class MiddlewareTest
         
         
         //Act
+        controller.Get();
         
         //Assert
     }

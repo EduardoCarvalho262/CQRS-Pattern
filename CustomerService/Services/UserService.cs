@@ -18,9 +18,8 @@ namespace CustomerService.Services
             _mediator = mediator;
         }
         
-        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+        public async Task<AuthenticateResponse> Authenticate(AutheticateUserCommand command)
         {
-            var command = new CreateUserCommand(model.Username, model.Password);
             var autheticateResponse =  await _mediator.Send(command);
             return autheticateResponse;
         }
@@ -33,12 +32,26 @@ namespace CustomerService.Services
             return users;
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User> GetByUsernameAndPassword(string username, string password)
         {
-            var query = new GetUserByIdQuery(id);
+            var query = new GetUserByUsernameAndPasswordQuery(username, password);
             var user = await _mediator.Send(query);
 
             return user;
+        }
+
+        public async Task<User> GetById(int id)
+        {
+            var query = new GetUserByIdQuery();
+            var user = await _mediator.Send(query);
+
+            return user;
+        }
+
+        public async Task<RegisterResponse> Register(RegisterUserCommand command)
+        {
+            var response = await _mediator.Send(command);
+            return response;
         }
     }
 }
